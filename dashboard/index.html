@@ -191,18 +191,16 @@ async function search(type) {
         // Get API key from URL (?auth=KEY)
 
 // Load default tool (username)
+
+
+loadCredits();
+
 window.onload = () => {
     const firstTool = document.querySelector('.tool');
     if (firstTool) {
         loadTool({ currentTarget: firstTool }, 'username');
     }
 };
-    } catch {
-        resultBox.innerHTML = '<div class="result">Request failed.</div>';
-    }
-}
-
-loadCredits();
 
 
 </script>
