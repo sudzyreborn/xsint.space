@@ -98,13 +98,20 @@ function getKeyFromURL() {
     return params.get('auth');
 }
 
-let API_KEY = getKeyFromURL();
+// Try URL first, then localStorage
+let API_KEY = getKeyFromURL() || localStorage.getItem('xsintKey');
 
-// Handle auth + URL cleanup
 function handleAuth() {
     if (!API_KEY) {
+        // No key in URL or localStorage → redirect
         window.location.href = '/403';
         return false;
+    }
+
+    // If the key came from URL, save it to localStorage for next visits
+    const urlKey = getKeyFromURL();
+    if (urlKey && urlKey !== localStorage.getItem('xsintKey')) {
+        localStorage.setItem('xsintKey', urlKey);
     }
 
     // Remove ?auth=... from URL for privacy
