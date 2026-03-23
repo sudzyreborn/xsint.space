@@ -3,106 +3,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Account Page</title>
+<title>XSINT Account</title>
+
+<link rel="icon" type="image/png" href="../assets/xsintlogo.png" />
+
 <style>
-    body {
-        margin: 0;
-        font-family: Inter, Arial, sans-serif;
-        background: #0b1220;
-        color: #e5e7eb;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-    .account-container {
-        display: flex;
-        background: #1f2937;
-        border-radius: 12px;
-        overflow: hidden;
-        width: 800px;
-        max-width: 95%;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
-    .account-info {
-        flex: 1;
-        padding: 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .info-item {
-        margin-bottom: 20px;
-        font-size: 18px;
-    }
-    .logout-btn {
-        padding: 12px 20px;
-        background: #ef4444;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    .logout-btn:hover {
-        background: #dc2626;
-    }
-    .account-logo {
-        flex: 1;
-        background: #111827;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .account-logo img {
-        max-width: 80%;
-        max-height: 80%;
-        border-radius: 50%;
-    }
+body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
+
+.topbar { height:60px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; background:#020617; border-bottom:1px solid #1e293b; }
+.logo { height:32px; }
+.top-right { display:flex; align-items:center; gap:20px; }
+.credits { background:#2563eb; padding:6px 12px; border-radius:6px; font-size:14px; }
+
+.nav { display:flex; gap:20px; font-size:14px; }
+.nav a {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+.nav a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+.account { width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+
+.main { display:flex; justify-content:center; align-items:flex-start; padding-top:80px; }
+
+.account-container {
+    display:flex;
+    width:700px;
+    max-width:95%;
+    background:#1f2937;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+.account-info {
+    flex:1;
+    padding:40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.info-item {
+    margin-bottom:20px;
+    font-size:18px;
+}
+
+.logout-btn {
+    padding:12px 20px;
+    background:#ef4444;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+.logout-btn:hover {
+    background:#dc2626;
+}
+
+.account-logo {
+    flex:1;
+    background:#111827;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.account-logo img {
+    max-width:70%;
+    max-height:70%;
+    border-radius:50%;
+}
 </style>
 </head>
 <body>
-<div class="account-container">
-    <div class="account-info">
-        <div>
-            <div class="info-item" id="createdDate">Account Created: </div>
-            <div class="info-item" id="tier">Tier: </div>
+
+<div class="topbar">
+    <img src="../assets/xsintlogo.png" class="logo">
+    <div class="top-right">
+        <div class="credits" id="credits">Credits: 0</div>
+        <div class="nav">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/plans">Pricing</a>
+            <a href="/support">Support</a>
+            <a href="/api">API</a>
         </div>
-        <button class="logout-btn" id="logoutBtn">Logout</button>
+        <div class="account" onclick="window.location.href='/account'">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </div>
     </div>
-    <div class="account-logo">
-        <img id="logoImg" src="default-logo.png" alt="Account Logo">
+</div>
+
+<div class="main">
+    <div class="account-container">
+        <div class="account-info">
+            <div>
+                <div class="info-item" id="createdDate">Account Created: </div>
+                <div class="info-item" id="tier">Tier: </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+        <div class="account-logo">
+            <img id="logoImg" src="../assets/xsintlogo.png" alt="Account Logo">
+        </div>
     </div>
 </div>
 
 <script>
-    const apiBase = 'https://api.xsint.space/user/accountinfo';
-    const savedKey = localStorage.getItem('xsintKey');
+const API_BASE = 'https://api.xsint.space/user/accountinfo';
+const savedKey = localStorage.getItem('xsintKey');
 
-    if (!savedKey) {
-        // No key, redirect to 403
-        window.location.href = '/403.html';
-    } else {
-        fetch(`${apiBase}?key=${savedKey}`)
-            .then(res => {
-                if (!res.ok) throw new Error('API request failed');
-                return res.json();
-            })
-            .then(data => {
-                document.getElementById('createdDate').textContent = "Account Created: " + (data.createdDate || "");
-                document.getElementById('tier').textContent = "Tier: " + (data.tier || "");
-                document.getElementById('logoImg').src = data.logoUrl || 'default-logo.png';
-            })
-            .catch(err => {
-                console.warn("API request failed, showing empty account info.", err);
-                // Empty values are already default, just leave them
-            });
-    }
+if (!savedKey) {
+    window.location.href = '/403';
+} else {
+    fetch(`${API_BASE}?key=${savedKey}`)
+        .then(res => res.ok ? res.json() : Promise.reject())
+        .then(data => {
+            document.getElementById('createdDate').textContent = "Account Created: " + (data.createdDate || "");
+            document.getElementById('tier').textContent = "Tier: " + (data.tier || "");
+            document.getElementById('logoImg').src = data.logoUrl || '../assets/xsintlogo.png';
+        })
+        .catch(err => {
+            console.warn("Could not fetch account info.", err);
+        });
+}
 
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-        localStorage.removeItem('xsintKey');
-        window.location.href = '/login';
-    });
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('xsintKey');
+    window.location.href = '/login.html';
+});
 </script>
+
 </body>
 </html>
