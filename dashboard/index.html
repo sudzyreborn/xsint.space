@@ -184,24 +184,23 @@ async function search(type) {
     try {
         const res = await fetch(`https://api.xsint.space/search?method=${type}&query=${encodeURIComponent(input)}&key=${API_KEY}`);
         const data = await res.json();
-
         resultBox.innerHTML = `<div class="result">${JSON.stringify(data, null, 2)}</div>`;
         loadCredits();
+    } catch {
+        resultBox.innerHTML = '<div class="result">Request failed.</div>';
+    }
+}
 
-        // Get API key from URL (?auth=KEY)
-
-// Load default tool (username)
-
-
+// Load credits immediately
 loadCredits();
 
+// Load default tool (first tool) on page load
 window.onload = () => {
     const firstTool = document.querySelector('.tool');
     if (firstTool) {
         loadTool({ currentTarget: firstTool }, 'username');
     }
 };
-
 
 </script>
 
