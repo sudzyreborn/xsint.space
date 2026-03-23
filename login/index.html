@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XSINT Login</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        background: #0b1220;
+        color: #e5e7eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .login-container {
+        background: #131a2a;
+        padding: 2rem 3rem;
+        border-radius: 1rem;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        text-align: center;
+        width: 320px;
+    }
+
+    .login-container h1 {
+        margin-bottom: 1.5rem;
+        font-size: 1.75rem;
+        color: #e5e7eb;
+    }
+
+    .login-container input {
+        width: 100%;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+        border-radius: 0.5rem;
+        border: none;
+        outline: none;
+        background: #1f2937;
+        color: #e5e7eb;
+        font-size: 1rem;
+    }
+
+    .login-container button {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        border: none;
+        background: #2563eb;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .login-container button:hover {
+        background: #1e40af;
+    }
+
+    .message {
+        margin-top: 1rem;
+        color: #f87171; /* red-ish for warning */
+        font-size: 0.9rem;
+    }
+</style>
+</head>
+<body>
+<div class="login-container">
+    <h1>Login to access XSINT</h1>
+    <input type="text" id="keyInput" placeholder="Enter your login key" />
+    <button id="loginBtn">Login</button>
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+    const storedKey = localStorage.getItem('xsintKey');
+    const messageDiv = document.getElementById('message');
+
+    if(storedKey) {
+        // redirect if key exists
+        window.location.href = `/dashboard?auth=${storedKey}`;
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', () => {
+        const key = document.getElementById('keyInput').value.trim();
+        if(key.length === 0) {
+            messageDiv.textContent = "Please enter a key.";
+            return;
+        }
+        localStorage.setItem('xsintKey', key);
+        window.location.href = `/dashboard?auth=${key}`;
+    });
+</script>
+</body>
+</html>
