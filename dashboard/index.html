@@ -86,15 +86,13 @@
 </div>
 
 <div class="main">
-    <div class="content" id="content">
-    <h2>Select a tool to get started</h2>
-</div>
+    <div class="content" id="content"></div>
 </div>
 
 </div>
 
 <script>
-// Get API key from URL (?auth=KEY)
+
 function getKeyFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('auth');
@@ -183,10 +181,10 @@ async function search(type) {
         resultBox.innerHTML = `<div class="result">${JSON.stringify(data, null, 2)}</div>`;
         loadCredits();
 
+        // Get API key from URL (?auth=KEY)
+
 // Load default tool (username)
 window.onload = () => {
-    if (!API_KEY) return;
-
     const firstTool = document.querySelector('.tool');
     if (firstTool) {
         loadTool({ currentTarget: firstTool }, 'username');
@@ -198,6 +196,8 @@ window.onload = () => {
 }
 
 loadCredits();
+
+
 </script>
 
 </body>
