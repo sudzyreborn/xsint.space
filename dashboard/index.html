@@ -4,40 +4,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>XSINT Dashboard</title>
-<link rel="icon" type="image/png" href="..assets/xsintlogo.png" />
+
+<!-- Correct favicon -->
+<link rel="icon" type="image/png" href="../assets/xsintlogo.png" />
+
 <style>
-    body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
+body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
 
-    .topbar { height:60px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; background:#020617; border-bottom:1px solid #1e293b; }
-    .logo { height:32px; }
-    .top-right { display:flex; align-items:center; gap:20px; }
-    .credits { background:#2563eb; padding:6px 12px; border-radius:6px; font-size:14px; }
-    .nav { display:flex; gap:20px; font-size:14px; color:#9ca3af; }
-    .nav div:hover { color:white; cursor:pointer; text-decoration: underline; }
-    .account { width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.topbar { height:60px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; background:#020617; border-bottom:1px solid #1e293b; }
+.logo { height:32px; }
+.top-right { display:flex; align-items:center; gap:20px; }
+.credits { background:#2563eb; padding:6px 12px; border-radius:6px; font-size:14px; }
 
-    .container { display:flex; }
-    .sidebar { width:220px; background:#020617; height:calc(100vh - 60px); padding:15px 10px; }
+.nav { display:flex; gap:20px; font-size:14px; }
+.nav a {
+    color: #ffffff;           /* make links white */
+    text-decoration: none;    /* remove underline */
+    cursor: pointer;
+}
+.nav a:hover {
+    text-decoration: underline;  /* underline on hover */
+    color: #ffffff;              /* stays white */
+}
 
-    .tool { display:flex; align-items:center; padding:10px; margin:6px 0; cursor:pointer; border-radius:6px; color:#9ca3af; transition:0.2s; }
-    .tool:hover { background:#1e293b; color:white; }
-    .tool.active { background:#1e293b; color:white; }
+.account { width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
 
-    .icon { width:16px; height:16px; margin-right:10px; fill:#9ca3af; }
-    .tool.active .icon { fill:white; }
+.container { display:flex; }
+.sidebar { width:220px; background:#020617; height:calc(100vh - 60px); padding:15px 10px; }
 
-    .main { flex:1; display:flex; justify-content:center; align-items:flex-start; padding-top:80px; }
-    .content { width:500px; text-align:center; }
-    h2 { font-weight:500; margin-bottom:20px; }
+.tool { display:flex; align-items:center; padding:10px; margin:6px 0; cursor:pointer; border-radius:6px; color:#9ca3af; transition:0.2s; }
+.tool:hover { background:#1e293b; color:white; }
+.tool.active { background:#1e293b; color:white; }
 
-    .input-group { display:flex; justify-content:center; }
-    input { padding:12px; border-radius:6px; border:none; width:70%; background:#020617; color:white; }
-    button { padding:12px 18px; margin-left:10px; border-radius:6px; border:none; background:#2563eb; color:white; cursor:pointer; }
+.icon { width:16px; height:16px; margin-right:10px; fill:#9ca3af; }
+.tool.active .icon { fill:white; }
 
-    .result { margin-top:20px; text-align:left; font-size:13px; color:#9ca3af; white-space:pre-wrap; }
+.main { flex:1; display:flex; justify-content:center; align-items:flex-start; padding-top:80px; }
+.content { width:500px; text-align:center; }
+h2 { font-weight:500; margin-bottom:20px; }
 
-    .spinner { margin:20px auto; width:30px; height:30px; border:3px solid #1e293b; border-top:3px solid #2563eb; border-radius:50%; animation:spin 1s linear infinite; }
-    @keyframes spin { to { transform:rotate(360deg);} }
+.input-group { display:flex; justify-content:center; }
+input { padding:12px; border-radius:6px; border:none; width:70%; background:#020617; color:white; }
+button { padding:12px 18px; margin-left:10px; border-radius:6px; border:none; background:#2563eb; color:white; cursor:pointer; }
+
+.result { margin-top:20px; text-align:left; font-size:13px; color:#9ca3af; white-space:pre-wrap; }
+
+.spinner { margin:20px auto; width:30px; height:30px; border:3px solid #1e293b; border-top:3px solid #2563eb; border-radius:50%; animation:spin 1s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg);} }
 </style>
 </head>
 <body>
@@ -47,7 +60,7 @@
     <div class="top-right">
         <div class="credits" id="credits">Credits: 0</div>
         <div class="nav">
-            <a href="/dashboard">Home</a>
+            <a href="/">Home</a>
             <a href="/plans">Pricing</a>
             <a href="/support">Support</a>
             <a href="/api">API</a>
@@ -59,28 +72,22 @@
 </div>
 
 <div class="container">
-
 <div class="sidebar" id="sidebar">
     <div class="tool" onclick="loadTool(event,'username')">
         <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>Username
     </div>
-
     <div class="tool" onclick="loadTool(event,'email')">
         <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 6l9 7 9-7"/><path d="M3 18l6-5"/><path d="M21 18l-6-5"/></svg>Email
     </div>
-
     <div class="tool" onclick="loadTool(event,'phone')">
         <svg class="icon" viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><circle cx="12" cy="18" r="1"/></svg>Phone
     </div>
-
     <div class="tool" onclick="loadTool(event,'github')">
         <svg class="icon" viewBox="0 0 24 24"><path d="M12 .5C5.7.5.8 5.4.8 11.7c0 5 3.2 9.3 7.6 10.8.6.1.8-.3.8-.6v-2.2c-3.1.7-3.7-1.3-3.7-1.3-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.8 1.8 2.7 1.3.1-.7.4-1.3.7-1.6-2.5-.3-5.2-1.3-5.2-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C16.9 3 18 3.3 18 3.3c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.4-1.5 7.6-5.8 7.6-10.8C23.2 5.4 18.3.5 12 .5z"/></svg>GitHub
     </div>
-
     <div class="tool" onclick="loadTool(event,'ip')">
         <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M2 12h4M18 12h4M12 2v4M12 18v4"/></svg>IP
     </div>
-
     <div class="tool" onclick="loadTool(event,'website')">
         <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2c3 3 3 17 0 20"/><path d="M12 2c-3 3-3 17 0 20"/></svg>Website
     </div>
@@ -89,40 +96,30 @@
 <div class="main">
     <div class="content" id="content"></div>
 </div>
-
 </div>
 
 <script>
-
 function getKeyFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('auth');
 }
 
-// Try URL first, then localStorage
 let API_KEY = getKeyFromURL() || localStorage.getItem('xsintKey');
 
 function handleAuth() {
     if (!API_KEY) {
-        // No key in URL or localStorage → redirect
         window.location.href = '/403';
         return false;
     }
-
-    // If the key came from URL, save it to localStorage for next visits
     const urlKey = getKeyFromURL();
     if (urlKey && urlKey !== localStorage.getItem('xsintKey')) {
         localStorage.setItem('xsintKey', urlKey);
     }
-
-    // Remove ?auth=... from URL for privacy
     window.history.replaceState({}, document.title, window.location.pathname);
     return true;
 }
 
-if (!handleAuth()) {
-    throw new Error('Unauthorized');
-}
+if (!handleAuth()) { throw new Error('Unauthorized'); }
 
 async function loadCredits() {
     try {
@@ -141,7 +138,6 @@ function setActive(el) {
 
 function loadTool(event, type) {
     setActive(event.currentTarget);
-
     const titles = {
         username: "Username Intelligence",
         email: "Email Intelligence",
@@ -150,7 +146,6 @@ function loadTool(event, type) {
         ip: "IP Intelligence",
         website: "Website Intelligence"
     };
-
     const placeholders = {
         username: "Enter username",
         email: "Enter email",
@@ -159,7 +154,6 @@ function loadTool(event, type) {
         ip: "Enter IP address",
         website: "Enter website URL"
     };
-
     document.getElementById("content").innerHTML = `
         <h2>${titles[type]}</h2>
         <div class="input-group">
@@ -170,18 +164,12 @@ function loadTool(event, type) {
     `;
 }
 
-function handleEnter(e, type) {
-    if (e.key === 'Enter') {
-        search(type);
-    }
-}
+function handleEnter(e, type) { if (e.key === 'Enter') search(type); }
 
 async function search(type) {
     const input = document.getElementById("input").value;
     const resultBox = document.getElementById("result");
-
     resultBox.innerHTML = '<div class="spinner"></div>';
-
     try {
         const res = await fetch(`https://api.xsint.space/search?method=${type}&query=${encodeURIComponent(input)}&key=${API_KEY}`);
         const data = await res.json();
@@ -192,17 +180,12 @@ async function search(type) {
     }
 }
 
-// Load credits immediately
+// Initial load
 loadCredits();
-
-// Load default tool (first tool) on page load
 window.onload = () => {
     const firstTool = document.querySelector('.tool');
-    if (firstTool) {
-        loadTool({ currentTarget: firstTool }, 'username');
-    }
+    if (firstTool) loadTool({ currentTarget: firstTool }, 'username');
 };
-
 </script>
 
 </body>
