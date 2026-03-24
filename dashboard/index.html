@@ -363,11 +363,15 @@ async function search(type) {
         const res = await fetch(`https://api.xsint.space/search?method=${type}&query=${encodeURIComponent(input)}&key=${API_KEY}`);
         const data = await res.json();
 
+        const message = data.data && data.data.trim() !== "" 
+            ? data.data 
+            : "No results found.";
+
         resultBox.innerHTML = `
             <div class="result-card">
                 <strong>Query:</strong> ${input}<br><br>
                 <strong>Response:</strong>
-                <pre style="white-space:pre-wrap; margin-top:10px;">${JSON.stringify(data, null, 2)}</pre>
+                <pre style="white-space:pre-wrap; margin-top:10px;">${message}</pre>
             </div>
         `;
 
