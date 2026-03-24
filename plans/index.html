@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XSINT Pricing</title>
+<link rel="icon" type="image/png" href="../assets/xsintlogo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #020617;
+    --panel: rgba(15, 23, 42, 0.7);
+    --border: rgba(148, 163, 184, 0.1);
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --primary: #3b82f6; /* blue for buttons */
+}
+
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+
+/* Topbar */
+.topbar {
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 24px;
+    backdrop-filter: blur(12px);
+    background: rgba(2,6,23,0.6);
+    border-bottom:1px solid var(--border);
+}
+
+.logo { height:30px; }
+
+.top-right a {
+    color: var(--muted); /* grey by default */
+    text-decoration:none;
+    margin-left:16px;
+    font-weight:500;
+    transition: 0.2s;
+}
+.top-right a:hover { color: #fff; } /* white on hover */
+
+/* Cards layout */
+.flex {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    gap:2rem;
+    padding:2rem;
+    min-height: calc(100vh - 60px);
+}
+
+/* Individual card */
+.card {
+    flex: 1 1 300px;
+    max-width: 23rem;
+    background: var(--panel);
+    backdrop-filter: blur(20px);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:2rem;
+    display:flex;
+    flex-direction:column;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+.card:hover { transform: translateY(-5px); }
+
+.card-header { margin-bottom:1.5rem; border-bottom:1px solid var(--border); padding-bottom:0.75rem; }
+.card-header .tier { font-size:0.75rem; color:var(--muted); margin-bottom:0.5rem; }
+.card-header h2 { font-size:2rem; font-weight:500; display:inline; margin-right:0.5rem; }
+.card-header span { font-size:1rem; color:var(--muted); }
+
+/* Features list */
+.features { flex:1; display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem; }
+.features div { display:flex; align-items:flex-start; font-size:0.9rem; }
+.features svg { margin-right:0.5rem; flex-shrink:0; color:#22c55e; margin-top:2px; }
+
+/* Select button */
+.button {
+    background: var(--primary);
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:0.75rem 1rem;
+    cursor:pointer;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: transform 0.2s;
+}
+.button:hover { transform: translateY(-2px); }
+
+/* Description under button */
+.desc { font-size:0.75rem; color:var(--muted); margin-top:0.5rem; line-height:1.4; }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+    <img src="../assets/xsintlogo.png" class="logo">
+    <div class="top-right">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/plans">Pricing</a>
+        <a href="/support">Support</a>
+        <a href="/api">API</a>
+    </div>
+</div>
+
+<!-- Pricing cards -->
+<div class="flex">
+    <!-- Free -->
+    <div class="card">
+        <div class="card-header">
+            <div class="tier">FREE</div>
+            <h2>$0</h2><span>/Month</span>
+        </div>
+        <div class="features">
+            <div><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5.75 12.87L8.34 16.41C9.15 17.53 10.82 17.50 11.60 16.37L18.25 6.75"/></svg>20 Credits / Day</div>
+            <div><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5.75 12.87L8.34 16.41C9.15 17.53 10.82 17.50 11.60 16.37L18.25 6.75"/></svg>No API Access</div>
+        </div>
+        <button class="button">Select</button>
+    </div>
+
+    <!-- Hobby -->
+    <div class="card">
+        <div class="card-header">
+            <div class="tier">HOBBY</div>
+            <h2>$5</h2><span>/Month</span>
+        </div>
+        <div class="features">
+            <div><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5.75 12.87L8.34 16.41C9.15 17.53 10.82 17.50 11.60 16.37L18.25 6.75"/></svg>100 Credits / Day</div>
+            <div><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5.75 12.87L8.34 16.41C9.15 17.53 10.82 17.50 11.60 16.37L18.25 6.75"/></svg>No API Access</div>
+        </div>
+        <button class="button">Select</button>
+    </div>
+
+    <!-- Developer -->
+    <div class="card">
+        <div class="card-header">
+            <div class="tier">DEVELOPER</div>
+            <h2>$10</h2><span>/Month</span>
+        </div>
+        <div class="features">
+            <div><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5.75 12.87L8.34 16.41C9.15 17.53 10.82 17.50 11.60 16.37L18.25 6.75"/></svg>500 Credits / Day</div>
+            <div><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5.75 12.87L8.34 16.41C9.15 17.53 10.82 17.50 11.60 16.37L18.25 6.75"/></svg>API Limit: 20 requests/min</div>
+            <div><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5.75 12.87L8.34 16.41C9.15 17.53 10.82 17.50 11.60 16.37L18.25 6.75"/></svg>Priority Support</div>
+        </div>
+        <button class="button">Select</button>
+    </div>
+</div>
+
+</body>
+</html>
