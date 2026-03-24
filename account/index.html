@@ -6,38 +6,103 @@
 <title>XSINT Account</title>
 
 <link rel="icon" type="image/png" href="../assets/xsintlogo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
+:root {
+    --bg: #020617;
+    --panel: rgba(15, 23, 42, 0.7);
+    --border: rgba(148, 163, 184, 0.1);
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --primary: #3b82f6;
+}
 
-.topbar { height:60px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; background:#020617; border-bottom:1px solid #1e293b; }
-.logo { height:32px; }
-.top-right { display:flex; align-items:center; gap:20px; }
-.credits { background:#2563eb; padding:6px 12px; border-radius:6px; font-size:14px; }
+* { box-sizing: border-box; }
 
-.nav { display:flex; gap:20px; font-size:14px; }
+body {
+    margin:0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.topbar {
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 24px;
+    backdrop-filter: blur(12px);
+    background: rgba(2,6,23,0.6);
+    border-bottom:1px solid var(--border);
+}
+
+.logo { height:30px; }
+
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.credits {
+    padding:6px 12px;
+    border-radius:999px;
+    background: rgba(59,130,246,0.15);
+    border:1px solid rgba(59,130,246,0.3);
+    color:#60a5fa;
+    font-size:13px;
+}
+
 .nav a {
-    color: #ffffff;
-    text-decoration: none;
+    color: var(--muted);
+    text-decoration:none;
+    margin:0 8px;
+    transition:0.2s;
+}
+.nav a:hover { color:white; }
+
+.account { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(148,163,184,0.08);
+    border: 1px solid var(--border);
     cursor: pointer;
-}
-.nav a:hover {
-    text-decoration: underline;
-    color: #ffffff;
+    transition: all 0.2s ease;
+    margin: 0; 
+    padding: 0;
 }
 
-.account { width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.account:hover {
+    background: rgba(59,130,246,0.15);
+    border-color: rgba(59,130,246,0.4);
+    transform: translateY(-1px);
+}
 
-.main { display:flex; justify-content:center; align-items:flex-start; padding-top:80px; }
+.account:hover .icon { fill: #60a5fa; }
+.account .icon { margin:0; display:block; }
+
+.main {
+    display:flex;
+    justify-content:center;
+    padding:80px 20px;
+}
 
 .account-container {
     display:flex;
     width:700px;
     max-width:95%;
-    background:#1f2937;
-    border-radius:12px;
+    background: var(--panel);
+    backdrop-filter: blur(20px);
+    border:1px solid var(--border);
+    border-radius:16px;
     overflow:hidden;
-    box-shadow:0 0 20px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
 }
 
 .account-info {
@@ -50,7 +115,8 @@ body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
 
 .info-item {
     margin-bottom:20px;
-    font-size:18px;
+    font-size:16px;
+    color: var(--text);
 }
 
 .logout-btn {
@@ -61,14 +127,13 @@ body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
     border-radius:8px;
     cursor:pointer;
     font-size:16px;
+    transition: all 0.2s ease;
 }
-.logout-btn:hover {
-    background:#dc2626;
-}
+.logout-btn:hover { background:#dc2626; }
 
 .account-logo {
     flex:1;
-    background:#111827;
+    background: rgba(2,6,23,0.7);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -82,6 +147,7 @@ body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
 </head>
 <body>
 
+<!-- Topbar -->
 <div class="topbar">
     <img src="../assets/xsintlogo.png" class="logo">
     <div class="top-right">
@@ -93,11 +159,15 @@ body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
             <a href="/api">API</a>
         </div>
         <div class="account" onclick="window.location.href='/account'">
-            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+            <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+            </svg>
         </div>
     </div>
 </div>
 
+<!-- Main content -->
 <div class="main">
     <div class="account-container">
         <div class="account-info">
@@ -114,23 +184,41 @@ body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
 </div>
 
 <script>
-const API_BASE = 'https://api.xsint.space/user/accountinfo';
-const savedKey = localStorage.getItem('xsintKey');
-
-if (!savedKey) {
-    window.location.href = '/403';
-} else {
-    fetch(`${API_BASE}?key=${savedKey}`)
-        .then(res => res.ok ? res.json() : Promise.reject())
-        .then(data => {
-            document.getElementById('createdDate').textContent = "Account Created: " + (data.createdDate || "");
-            document.getElementById('tier').textContent = "Tier: " + (data.tier || "");
-            document.getElementById('logoImg').src = data.logoUrl || '../assets/xsintlogo.png';
-        })
-        .catch(err => {
-            console.warn("Could not fetch account info.", err);
-        });
+function getKey() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('auth') || localStorage.getItem('xsintKey');
 }
+
+const API_KEY = getKey();
+if (!API_KEY) { window.location.href = '/403'; }
+
+async function loadCreditsAndInfo() {
+    try {
+        const res = await fetch(`https://api.xsint.space/user/accountinfo?key=${API_KEY}`);
+        const data = await res.json();
+
+        // Update credits
+        document.getElementById("credits").innerText = `Credits: ${data.credits || 0}`;
+
+        // Update account info
+        document.getElementById('createdDate').textContent = "Account Created: " + (data.createdDate || "");
+        document.getElementById('tier').textContent = "Tier: " + (data.tier || "");
+        document.getElementById('logoImg').src = data.logoUrl || '../assets/xsintlogo.png';
+
+        // Save key to localStorage if coming from URL
+        const urlKey = new URLSearchParams(window.location.search).get('auth');
+        if (urlKey && urlKey !== localStorage.getItem('xsintKey')) {
+            localStorage.setItem('xsintKey', urlKey);
+        }
+
+        window.history.replaceState({}, document.title, window.location.pathname);
+
+    } catch (err) {
+        console.warn("Failed to fetch account info.", err);
+    }
+}
+
+loadCreditsAndInfo();
 
 document.getElementById('logoutBtn').addEventListener('click', () => {
     localStorage.removeItem('xsintKey');
