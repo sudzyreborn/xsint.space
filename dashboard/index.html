@@ -4,53 +4,174 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>XSINT Dashboard</title>
-
-<!-- Correct favicon -->
 <link rel="icon" type="image/png" href="../assets/xsintlogo.png" />
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-body { margin:0; font-family:Inter, Arial; background:#0b1220; color:#e5e7eb; }
+:root {
+    --bg: #020617;
+    --panel: rgba(15, 23, 42, 0.7);
+    --border: rgba(148, 163, 184, 0.1);
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --primary: #3b82f6;
+}
 
-.topbar { height:60px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; background:#020617; border-bottom:1px solid #1e293b; }
-.logo { height:32px; }
-.top-right { display:flex; align-items:center; gap:20px; }
-.credits { background:#2563eb; padding:6px 12px; border-radius:6px; font-size:14px; }
+* { box-sizing: border-box; }
+body {
+    margin:0;
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #0f172a, #020617);
+    color: var(--text);
+}
 
-.nav { display:flex; gap:20px; font-size:14px; }
+.topbar {
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 24px;
+    backdrop-filter: blur(12px);
+    background: rgba(2,6,23,0.6);
+    border-bottom:1px solid var(--border);
+}
+
+.logo { height:30px; }
+
+.top-right { display:flex; align-items:center; gap:18px; }
+
+.credits {
+    padding:6px 12px;
+    border-radius:999px;
+    background: rgba(59,130,246,0.15);
+    border:1px solid rgba(59,130,246,0.3);
+    color:#60a5fa;
+    font-size:13px;
+}
+
 .nav a {
-    color: #ffffff;           /* make links white */
-    text-decoration: none;    /* remove underline */
-    cursor: pointer;
+    color: var(--muted);
+    text-decoration:none;
+    margin:0 8px;
+    transition:0.2s;
 }
-.nav a:hover {
-    text-decoration: underline;  /* underline on hover */
-    color: #ffffff;              /* stays white */
-}
-
-.account { width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.nav a:hover { color:white; }
 
 .container { display:flex; }
-.sidebar { width:220px; background:#020617; height:calc(100vh - 60px); padding:15px 10px; }
 
-.tool { display:flex; align-items:center; padding:10px; margin:6px 0; cursor:pointer; border-radius:6px; color:#9ca3af; transition:0.2s; }
-.tool:hover { background:#1e293b; color:white; }
-.tool.active { background:#1e293b; color:white; }
+.sidebar {
+    width:230px;
+    padding:20px 10px;
+    border-right:1px solid var(--border);
+}
 
-.icon { width:16px; height:16px; margin-right:10px; fill:#9ca3af; }
-.tool.active .icon { fill:white; }
+.tool {
+    display:flex;
+    align-items:center;
+    padding:12px;
+    margin:6px 0;
+    border-radius:10px;
+    cursor:pointer;
+    color:var(--muted);
+    transition: all 0.2s ease;
+}
 
-.main { flex:1; display:flex; justify-content:center; align-items:flex-start; padding-top:80px; }
-.content { width:500px; text-align:center; }
-h2 { font-weight:500; margin-bottom:20px; }
+.tool:hover {
+    background: rgba(59,130,246,0.1);
+    color:white;
+    transform: translateX(4px);
+}
 
-.input-group { display:flex; justify-content:center; }
-input { padding:12px; border-radius:6px; border:none; width:70%; background:#020617; color:white; }
-button { padding:12px 18px; margin-left:10px; border-radius:6px; border:none; background:#2563eb; color:white; cursor:pointer; }
+.tool.active {
+    background: rgba(59,130,246,0.15);
+    color:white;
+}
 
-.result { margin-top:20px; text-align:left; font-size:13px; color:#9ca3af; white-space:pre-wrap; }
+.icon { width:16px; height:16px; margin-right:10px; fill:currentColor; }
 
-.spinner { margin:20px auto; width:30px; height:30px; border:3px solid #1e293b; border-top:3px solid #2563eb; border-radius:50%; animation:spin 1s linear infinite; }
+.main {
+    flex:1;
+    display:flex;
+    justify-content:center;
+    padding:60px 20px;
+}
+
+.card {
+    width:600px;
+    background: var(--panel);
+    backdrop-filter: blur(20px);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    animation: fadeIn 0.3s ease;
+}
+
+h2 { margin-bottom:20px; font-weight:500; }
+
+.input-group {
+    display:flex;
+    gap:10px;
+}
+
+input {
+    flex:1;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:#020617;
+    color:white;
+    transition:0.2s;
+}
+
+input:focus {
+    outline:none;
+    border-color: var(--primary);
+    box-shadow:0 0 0 2px rgba(59,130,246,0.2);
+}
+
+button {
+    padding:12px 18px;
+    border-radius:8px;
+    border:none;
+    background: var(--primary);
+    color:white;
+    cursor:pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+.result-card {
+    margin-top:20px;
+    background: rgba(2,6,23,0.7);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:15px;
+    font-size:13px;
+    color: var(--muted);
+}
+
+.spinner {
+    margin:20px auto;
+    width:30px;
+    height:30px;
+    border:3px solid #1e293b;
+    border-top:3px solid var(--primary);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
 @keyframes spin { to { transform:rotate(360deg);} }
+
+@keyframes fadeIn {
+    from { opacity:0; transform:translateY(10px);} 
+    to { opacity:1; transform:translateY(0);} 
+}
+
 </style>
 </head>
 <body>
@@ -65,36 +186,21 @@ button { padding:12px 18px; margin-left:10px; border-radius:6px; border:none; ba
             <a href="/support">Support</a>
             <a href="/api">API</a>
         </div>
-        <div class="account" onclick="window.location.href='https://xsint.space/account'">
-            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
-        </div>
     </div>
 </div>
 
 <div class="container">
-<div class="sidebar" id="sidebar">
-    <div class="tool" onclick="loadTool(event,'username')">
-        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>Username
-    </div>
-    <div class="tool" onclick="loadTool(event,'email')">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18v12H3z"/><path d="M3 6l9 7 9-7"/><path d="M3 18l6-5"/><path d="M21 18l-6-5"/></svg>Email
-    </div>
-    <div class="tool" onclick="loadTool(event,'phone')">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><circle cx="12" cy="18" r="1"/></svg>Phone
-    </div>
-    <div class="tool" onclick="loadTool(event,'github')">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M12 .5C5.7.5.8 5.4.8 11.7c0 5 3.2 9.3 7.6 10.8.6.1.8-.3.8-.6v-2.2c-3.1.7-3.7-1.3-3.7-1.3-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.8 1.8 2.7 1.3.1-.7.4-1.3.7-1.6-2.5-.3-5.2-1.3-5.2-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C16.9 3 18 3.3 18 3.3c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.4-1.5 7.6-5.8 7.6-10.8C23.2 5.4 18.3.5 12 .5z"/></svg>GitHub
-    </div>
-    <div class="tool" onclick="loadTool(event,'ip')">
-        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M2 12h4M18 12h4M12 2v4M12 18v4"/></svg>IP
-    </div>
-    <div class="tool" onclick="loadTool(event,'website')">
-        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2c3 3 3 17 0 20"/><path d="M12 2c-3 3-3 17 0 20"/></svg>Website
-    </div>
+<div class="sidebar">
+    <div class="tool" onclick="loadTool(event,'username')">Username</div>
+    <div class="tool" onclick="loadTool(event,'email')">Email</div>
+    <div class="tool" onclick="loadTool(event,'phone')">Phone</div>
+    <div class="tool" onclick="loadTool(event,'github')">GitHub</div>
+    <div class="tool" onclick="loadTool(event,'ip')">IP</div>
+    <div class="tool" onclick="loadTool(event,'website')">Website</div>
 </div>
 
 <div class="main">
-    <div class="content" id="content"></div>
+    <div id="content"></div>
 </div>
 </div>
 
@@ -131,13 +237,10 @@ async function loadCredits() {
     }
 }
 
-function setActive(el) {
-    document.querySelectorAll('.tool').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-}
-
 function loadTool(event, type) {
-    setActive(event.currentTarget);
+    document.querySelectorAll('.tool').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
     const titles = {
         username: "Username Intelligence",
         email: "Email Intelligence",
@@ -146,37 +249,43 @@ function loadTool(event, type) {
         ip: "IP Intelligence",
         website: "Website Intelligence"
     };
-    const placeholders = {
-        username: "Enter username",
-        email: "Enter email",
-        phone: "Enter phone number",
-        github: "Enter GitHub username",
-        ip: "Enter IP address",
-        website: "Enter website URL"
-    };
+
     document.getElementById("content").innerHTML = `
-        <h2>${titles[type]}</h2>
-        <div class="input-group">
-            <input id="input" placeholder="${placeholders[type]}" onkeydown="handleEnter(event, '${type}')" />
-            <button onclick="search('${type}')">Search</button>
+        <div class="card">
+            <h2>${titles[type]}</h2>
+            <div class="input-group">
+                <input id="input" placeholder="Enter ${type}" onkeydown="handleEnter(event, '${type}')" />
+                <button onclick="search('${type}')">Search</button>
+            </div>
+            <div id="result"></div>
         </div>
-        <div id="result"></div>
     `;
 }
 
-function handleEnter(e, type) { if (e.key === 'Enter') search(type); }
+function handleEnter(e, type) {
+    if (e.key === 'Enter') search(type);
+}
 
 async function search(type) {
     const input = document.getElementById("input").value;
     const resultBox = document.getElementById("result");
     resultBox.innerHTML = '<div class="spinner"></div>';
+
     try {
         const res = await fetch(`https://api.xsint.space/search?method=${type}&query=${encodeURIComponent(input)}&key=${API_KEY}`);
         const data = await res.json();
-        resultBox.innerHTML = `<div class="result">${JSON.stringify(data, null, 2)}</div>`;
+
+        resultBox.innerHTML = `
+            <div class="result-card">
+                <strong>Query:</strong> ${input}<br><br>
+                <strong>Response:</strong>
+                <pre style="white-space:pre-wrap; margin-top:10px;">${JSON.stringify(data, null, 2)}</pre>
+            </div>
+        `;
+
         loadCredits();
     } catch {
-        resultBox.innerHTML = '<div class="result">Request failed.</div>';
+        resultBox.innerHTML = '<div class="result-card">Request failed.</div>';
     }
 }
 
@@ -184,7 +293,7 @@ async function search(type) {
 loadCredits();
 window.onload = () => {
     const firstTool = document.querySelector('.tool');
-    if (firstTool) loadTool({ currentTarget: firstTool }, 'username');
+    if (firstTool) firstTool.click();
 };
 </script>
 
