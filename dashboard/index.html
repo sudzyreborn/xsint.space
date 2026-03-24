@@ -330,16 +330,22 @@ function loadTool(event, type) {
         website: "Website Intelligence"
     };
 
-    document.getElementById("content").innerHTML = `
-        <div class="card">
-            <h2>${titles[type]}</h2>
-            <div class="input-group">
-                <input id="input" placeholder="Enter ${type}" onkeydown="handleEnter(event, '${type}')" />
-                <button onclick="search('${type}')">Search</button>
+    const content = document.getElementById("content");
+
+    // Only create a new card if the type changed
+    if (!content.dataset.type || content.dataset.type !== type) {
+        content.dataset.type = type;
+        content.innerHTML = `
+            <div class="card">
+                <h2>${titles[type]}</h2>
+                <div class="input-group">
+                    <input id="input" placeholder="Enter ${type}" onkeydown="handleEnter(event, '${type}')" />
+                    <button onclick="search('${type}')">Search</button>
+                </div>
+                <div id="result"></div>
             </div>
-            <div id="result"></div>
-        </div>
-    `;
+        `;
+    }
 }
 
 function handleEnter(e, type) {
