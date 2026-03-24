@@ -317,7 +317,7 @@ if (!handleAuth()) { throw new Error('Unauthorized'); }
 
 async function loadCredits() {
     try {
-        const res = await fetch(`https://api.xsint.space/user?key=${API_KEY}`);
+        const res = await fetch(`https://api.xsint.space/user/accountinfo?key=${API_KEY}`);
         const data = await res.json();
         document.getElementById("credits").innerText = `Credits: ${data.credits || 0}`;
     } catch {
