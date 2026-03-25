@@ -67,7 +67,10 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     transition: transform 0.2s;
 }
-.card:hover { transform: translateY(-5px); }
+.card:hover {
+    transform: translateY(-5px);
+    backdrop-filter: blur(0px);
+}
 
 .card-header { margin-bottom:1.5rem; border-bottom:1px solid var(--border); padding-bottom:0.75rem; }
 .card-header .tier { font-size:0.75rem; color:var(--muted); margin-bottom:0.5rem; }
