@@ -188,8 +188,8 @@ button.disabled {
         </div>
 
         <div class="actions">
-            <button onclick="toggleKey()">👁️ Toggle</button>
-            <button onclick="copyKey()">📋 Copy</button>
+            <button onclick="toggleKey()">Toggle</button>
+            <button onclick="copyKey()">Copy</button>
         </div>
 
         <button id="cycleBtn" onclick="openModal()">🔄 Cycle Key</button>
@@ -200,7 +200,7 @@ button.disabled {
 <div id="modal" class="modal">
     <div class="modal-box">
         <h3>Are you sure?</h3>
-        <p>This will reset your API key.</p>
+        <p>This will reset your API key</p>
 
         <div class="modal-buttons">
             <button onclick="confirmCycle()">Yes</button>
@@ -224,7 +224,13 @@ async function init() {
         const data = await res.json();
 
         if (!data || data.error) return window.location.href = "/403";
-        if (data.tier !== "Enterprise") return window.location.href = "/noaccess";
+        
+        console.log("Tier value:", JSON.stringify(data.tier));
+        
+        if (!data.tier || data.tier.trim().toLowerCase() !== "enterprise") {
+            window.location.href = "/noaccess";
+            return;
+        }
 
         document.getElementById("credits").innerText = `Credits: ${data.credits || 0}`;
 
